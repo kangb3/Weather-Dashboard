@@ -1,0 +1,15 @@
+.navbar-brand{
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    font-size: 30px;
+}
+
+.col-md-4{
+    font-weight: bold;
+}
+
+.col-md-8{
+    float: right;
+}
