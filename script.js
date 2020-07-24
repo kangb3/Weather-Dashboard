@@ -4,7 +4,10 @@ $(document).ready(function(){
     //takes one argument, city representing city name
     function currentWeather(city){
 
+      //Query URL for retrieving current weather condition
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=b16b8dd85bc345406e0453d1f7fc5fe0";
+      
+        
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -24,6 +27,24 @@ $(document).ready(function(){
             // empty content of card-body
             $("#currentWeather").empty();
             $("#currentWeather").append(cityName, showWeatherIcon, cityTemp, cityHumidity, cityWindSpeed);
+
+            
+            //Store latitude and longitude for UV Index
+            var latitude = response.coord.lat;
+            var longitude = response.coord.lon;
+
+            //Query URL for retrieving latitude and longitude for UV Index
+            var uvQueryURL = "https://api.openweathermap.org/data/2.5/uvi?lat="+latitude+"&lon="+longitude+"&apikey=b16b8dd85bc345406e0453d1f7fc5fe0";
+            //console.log("the lat: "+latitude+ "&"+longitude);
+            
+            //ajax call to retrieve UV Index value
+            $.ajax({
+              url: uvQueryURL,
+              method: "GET"
+              }).then(function(response) {
+                  var uvIndex = $("<p>").text("UV Index: " + response.value);
+                  $("#currentWeather").append(uvIndex);
+              });
 
           });
     
