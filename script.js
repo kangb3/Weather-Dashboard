@@ -13,14 +13,17 @@ $(document).ready(function(){
             //console.log(response);
 
           // Constructing HTML containing city name and current weather info
-            var cityName = $("<h1>").text(response.name);
+            var cityName = $("<h1>").text(response.name + ' ' + moment().format('LL'));
             var cityTemp = $("<p>").text("Temperature: " + response.main.temp);
             var cityHumidity = $("<p>").text("Humidity: " + response.main.humidity + "%");
             var cityWindSpeed = $("<p>").text("Wind Speed: " + response.wind.speed + " mph");
+            var weatherIcon = response.weather[0].icon;
+            var showWeatherIcon = $("<img id='weatherIcon'>");
+            showWeatherIcon.attr("src","http://openweathermap.org/img/w/" + weatherIcon + ".png");
 
             // empty content of card-body
-            $(".currentWeather").empty();
-            $(".currentWeather").append(cityName, cityTemp, cityHumidity, cityWindSpeed);
+            $("#currentWeather").empty();
+            $("#currentWeather").append(cityName, showWeatherIcon, cityTemp, cityHumidity, cityWindSpeed);
 
           });
     
@@ -34,6 +37,7 @@ $(document).ready(function(){
     //takes one argument, city representing user input for city
     function forecast(city){
         var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=b16b8dd85bc345406e0453d1f7fc5fe0";
+        $("#forcastWeather").empty();
 
         $.ajax({
           url: queryURL,
@@ -47,12 +51,13 @@ $(document).ready(function(){
             var cityTemp = $("<div>").text("Temp: " + response.list[i].main.temp);
             var cityHumidity = $("<p>").text("Humidity: " + response.list[i].main.humidity + "%")
             var forcastIcon = response.list[i].weather[0].icon;
-            var showForcastIcon = $("<img id='forecastIcon'>");
+            var showForcastIcon = $("<img id='forcastIcon'>");
             showForcastIcon.attr("src","https://openweathermap.org/img/w/" + forcastIcon + ".png");
 
-
+            //$("#forcastWeather").empty();
             forcastDiv.append(forcastDate, showForcastIcon, cityTemp, cityHumidity)
 
+            
             $("#forcastWeather").append(forcastDiv);
 
             //$(".forcastWeather").append(cityTemp, cityHumidity);
