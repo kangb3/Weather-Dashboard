@@ -33,13 +33,30 @@ $(document).ready(function(){
     //Function for retrieving five day forecast for a city
     //takes one argument, city representing user input for city
     function forecast(city){
-        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=b16b8dd85bc345406e0453d1f7fc5fe0";
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=b16b8dd85bc345406e0453d1f7fc5fe0";
 
         $.ajax({
           url: queryURL,
           method: "GET"
         }).then(function(response){
           console.log(response);
+
+          for(var i = 0; i < 5; i++){
+            var forcastDate = moment().add(i, 'days').format('LL');
+            var forcastDiv = $("<div class='forcastWeather'>");
+            var cityTemp = $("<div>").text("Temp: " + response.list[i].main.temp);
+            var cityHumidity = $("<p>").text("Humidity: " + response.list[i].main.humidity + "%")
+            var forcastIcon = response.list[i].weather[0].icon;
+            var showForcastIcon = $("<img id='forecastIcon'>");
+            showForcastIcon.attr("src","https://openweathermap.org/img/w/" + forcastIcon + ".png");
+
+
+            forcastDiv.append(forcastDate, showForcastIcon, cityTemp, cityHumidity)
+
+            $("#forcastWeather").append(forcastDiv);
+
+            //$(".forcastWeather").append(cityTemp, cityHumidity);
+          }
         });
     }
 
