@@ -22,7 +22,7 @@ $(document).ready(function(){
             var cityWindSpeed = $("<p>").text("Wind Speed: " + response.wind.speed + " mph");
             var weatherIcon = response.weather[0].icon;
             var showWeatherIcon = $("<img id='weatherIcon'>");
-            showWeatherIcon.attr("src","http://openweathermap.org/img/w/" + weatherIcon + ".png");
+            showWeatherIcon.attr("src","https://openweathermap.org/img/w/" + weatherIcon + ".png");
 
             // empty content of card-body
             $("#currentWeather").empty();
